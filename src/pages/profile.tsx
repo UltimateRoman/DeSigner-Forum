@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
+import NFTCard from "../components/NFTCard";
 import Redirect from "../components/Redirect";
 import { useAuth } from "../context/AuthProvider";
 import Default from "../layouts/default";
@@ -13,8 +14,9 @@ const Profile = (props: any) => {
     (async () => {
       if (!isAuthenticated) {
         const NFTS = await fetchNFTs();
+        console.log(NFTS);
         setNFTS(NFTS);
-      }    
+      }
     })();
   }, [NFTS?.length]);
 
@@ -51,7 +53,16 @@ const Profile = (props: any) => {
         </div>
       </div>
       <h2 className="mt-[50px] mb-[30px] font-extrabold text-3xl">NFTs</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[20px]"></div>
+      <div className="mb-[100px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[20px]">
+        {NFTS?.map((nft: any) => (
+          <NFTCard
+            image={nft?.ImageURLs?.[0]}
+            postHashHex={nft?.PostHashHex}
+            description={nft?.Body}
+            key={nft?.PostHashHex}
+          />
+        ))}
+      </div>
     </Default>
   );
 };
