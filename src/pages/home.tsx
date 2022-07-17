@@ -7,10 +7,10 @@ const Home: React.FC = () => {
       <div className="h-full pt-[100px] flex flex-col lg:flex-row justify-center items-center">
         <div className="flex-1 flex flex-col items-start justify-center">
           <h1 className="text-7xl max-w-[800px] font-black">
-            Designer Forum Lorem Ipsum Dolor is Cool
+            Designer Forum and NFT Gallery
           </h1>
           <p className="mt-[20px] text-gray-200 font-medium">
-            lorem ipsum dolor cool cool dolor lorem ipsum
+            Create and View NFTs for exclusive designs
           </p>
           <div className="block">
             <div className="relative w-auto group">
@@ -20,6 +20,10 @@ const Home: React.FC = () => {
               </button>
             </div>
           </div>
+          <br/>
+          <p className="mt-[20px] text-gray-200 font-medium text-lg">
+            Built on the DeSo Blockchain
+          </p>
         </div>
         <div className="flex-1 flex items-center justify-center h-full w-full">
           <img className="h-[500px] w-auto" src={HomeImage} alt="" />

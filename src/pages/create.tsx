@@ -33,7 +33,7 @@ const Create: React.FC = (props) => {
         <div className="flex flex-col items-start justify-center">
           <h1 className="text-7xl font-black">Create NFT</h1>
           <p className="mt-[10px] text-gray-200 font-medium text-[18px]">
-            Lorem ipsum dolor cool cool dolor lorem ipsum
+            As a Fashion designer, you can create NFTs of your designs!     
           </p>
           <form
             className="flex flex-col items-start w-full mt-[10px]"
@@ -49,7 +49,7 @@ const Create: React.FC = (props) => {
                 type="text"
                 name="title"
                 className="border border-gray-300 rounded bg-transparent px-[10px] py-[7px] w-full"
-                placeholder="Enter the Title"
+                placeholder="Enter the Title of your design"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -64,14 +64,14 @@ const Create: React.FC = (props) => {
                 type="number"
                 name="copies"
                 className="border border-gray-300 rounded bg-transparent px-[10px] py-[7px] w-full"
-                placeholder="Enter the number of copies"
+                placeholder="Enter the number of NFT copies to be created"
                 value={copies}
                 onChange={(e) => setCopies(e.target.value)}
               />
             </div>
             <div className="mt-[20px] w-full max-w-[400px]">
               <label htmlFor="image" className="text-lg font-bold mb-[10px]">
-                Upload Image
+                Upload Design
               </label>
               <input
                 required

@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="flex items-center justify-between max-w-[1440px] mx-auto w-full max-h-[10vh] py-[10px] h-full px-[32px] md:px-[64px] lg:px-[120px]">
       <Link to="/" className="text-[20px] flex-[2]">
-        <span className="font-bold">Designer</span>Forum
+        <span className="font-bold">DeSigner</span>Forum
       </Link>
       <ul className="flex items-center font-medium justify-between flex-1">
         <li>
