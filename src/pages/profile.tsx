@@ -13,7 +13,6 @@ const Profile = (props: any) => {
   useEffect(() => {
     (async () => {
       const NFTS = await fetchNFTs();
-      console.log(NFTS);
       setNFTS(NFTS);
     })();
   }, []);
