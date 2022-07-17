@@ -15,6 +15,7 @@ interface AuthContextTypes {
   fetchNFTs: () => any;
   login: () => any;
   logout: () => any;
+  createNFT: (title: string, copies: number, image: File) => any;
 }
 
 const deso = new Deso();
@@ -24,6 +25,7 @@ export const AuthContext = createContext<AuthContextTypes>({
   isAuthenticated: false,
   isLoading: true,
   fetchNFTs: () => {},
+  createNFT: () => {},
   login: () => {},
   logout: () => {},
 });
@@ -77,7 +79,7 @@ const AuthProvider: React.FC<{ children: any }> = (props) => {
       const request = {
         UserPublicKeyBase58Check: publicKey,
       };
-      const response = await deso.nft.getNftsForUser(request) as any;
+      const response = (await deso.nft.getNftsForUser(request)) as any;
       const keys = Object.keys(response?.data?.NFTsMap);
       keys.forEach((key) => {
         const nft = response?.data?.NFTsMap[key]?.PostEntryResponse;
@@ -110,9 +112,47 @@ const AuthProvider: React.FC<{ children: any }> = (props) => {
     }
   };
 
+  const createNFT = async (title: string, copies: number, image: File) => {
+    try {
+      const request0 = {
+        UserPublicKeyBase58Check: userData?.address,
+        file: image,
+      };
+      const response0 = (await deso.media.uploadImage(request0)) as any;
+      const request1 = {
+        UpdaterPublicKeyBase58Check: userData?.address as string,
+        BodyObj: {
+          Body: title,
+          ImageURLs: [response0?.data?.ImageURL],
+          VideoURLs: [],
+        },
+      };
+      const response1 = await deso.posts.submitPost(request1);
+      const request2 = {
+        UpdaterPublicKeyBase58Check: userData?.address,
+        NFTPostHashHex: response1?.constructedTransactionResponse?.PostHashHex,
+        NumCopies: copies,
+      };
+      const response2 = await deso.nft.createNft(request2);
+      console.log(response2);
+      return true;
+    } catch (error) {
+      console.log("Error", error);
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, isLoading, userData, login, logout, fetchNFTs }}
+      value={{
+        isAuthenticated,
+        isLoading,
+        userData,
+        login,
+        logout,
+        fetchNFTs,
+        createNFT,
+      }}
     >
       {props.children}
     </AuthContext.Provider>

@@ -1,38 +1,28 @@
 import { FormEventHandler, useState } from "react";
+import Loading from "../components/Loading";
+import Redirect from "../components/Redirect";
+import { useAuth } from "../context/AuthProvider";
 import Default from "../layouts/default";
 
 const Create: React.FC = (props) => {
   const [title, setTitle] = useState<string>("");
   const [copies, setCopies] = useState<string>("");
   const [image, setImage] = useState<File>();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit: FormEventHandler = (e) => {
+  const { isLoading, isAuthenticated, createNFT } = useAuth();
+
+  if (isLoading) return <Loading />;
+
+  if (!isAuthenticated) return <Redirect to="/" />;
+
+  const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
-    // try {
-    //     const request0 = {
-    //       "UserPublicKeyBase58Check": user.key,
-    //       "file": image
-    //     };
-    //     const response0 = await deso.media.uploadImage(request0);
-    //     const request1 = {
-    //       "UpdaterPublicKeyBase58Check": user.key,
-    //       "BodyObj": {
-    //         "Body": title,
-    //         "ImageURLs": [response0?.ImageURL]
-    //       }
-    //     };
-    //     const response1 = await deso.posts.submitPost(request1);
-    //     const request2 = {
-    //       "UpdaterPublicKeyBase58Check": user.key,
-    //       "NFTPostHashHex": response1?.PostHashHex,
-    //       "NumCopies": copies,
-    //     };
-    //      const response2 = await deso.nft.createNft(request2);
-    //      console.log(response2);
-    // } catch (error) {
-    //     console.log("Error", error);
-    // }
-    console.log({ title, copies, image });
+    setLoading(true);
+    const success = await createNFT(title, parseInt(copies), image as File);
+    if (success) alert("NFT created");
+    else alert("Some error occured");
+    setLoading(false);
   };
 
   return (
@@ -51,6 +41,7 @@ const Create: React.FC = (props) => {
               Title
             </label>
             <input
+              required
               id="title"
               type="text"
               name="title"
@@ -65,6 +56,7 @@ const Create: React.FC = (props) => {
               Number of Copies
             </label>
             <input
+              required
               id="copies"
               type="number"
               name="copies"
@@ -79,6 +71,7 @@ const Create: React.FC = (props) => {
               Upload Image
             </label>
             <input
+              required
               id="image"
               type="file"
               accept="image/png, image/gif, image/jpeg"
@@ -91,7 +84,8 @@ const Create: React.FC = (props) => {
             <div className="relative w-auto group">
               <button
                 type="submit"
-                className="transition-all duration-150 ease-linear group-hover:text-black group-hover:border-white border border-transparent group-hover:bg-transparent block bg-primary text-white px-[50px] py-[10px] rounded font-bold uppercase mt-[30px]"
+                className="transition-all disabled:bg-gray-600 disabled:cursor-not-allowed duration-150 ease-linear group-hover:text-black group-hover:border-white border border-transparent group-hover:bg-transparent block bg-primary text-white px-[50px] py-[10px] rounded font-bold uppercase mt-[30px]"
+                disabled={loading}
               >
                 Create NFT
                 <span className="transition-all duration-150 ease-linear group-hover:bg-white group-hover:border-0 h-full w-full rounded absolute border top-0 left-0 z-[-1] translate-x-[20px] translate-y-[10px]"></span>
