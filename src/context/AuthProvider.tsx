@@ -123,18 +123,22 @@ const AuthProvider: React.FC<{ children: any }> = (props) => {
         UpdaterPublicKeyBase58Check: userData?.address as string,
         BodyObj: {
           Body: title,
-          ImageURLs: [response0?.data?.ImageURL],
+          ImageURLs: [response0?.ImageURL],
           VideoURLs: [],
         },
       };
       const response1 = await deso.posts.submitPost(request1);
       const request2 = {
         UpdaterPublicKeyBase58Check: userData?.address,
-        NFTPostHashHex: response1?.constructedTransactionResponse?.PostHashHex,
+        NFTPostHashHex: response1?.submittedTransactionResponse?.PostEntryResponse?.PostHashHex,
         NumCopies: copies,
+        NFTRoyaltyToCreatorBasisPoints: 100,
+        NFTRoyaltyToCoinBasisPoints: 100,
+        HasUnlockable: false,
+        IsForSale: false,
+        MinFeeRateNanosPerKB: 1000
       };
       const response2 = await deso.nft.createNft(request2);
-      console.log(response2);
       return true;
     } catch (error) {
       console.log("Error", error);
