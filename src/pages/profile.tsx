@@ -12,13 +12,11 @@ const Profile = (props: any) => {
 
   useEffect(() => {
     (async () => {
-      if (!isAuthenticated) {
-        const NFTS = await fetchNFTs();
-        console.log(NFTS);
-        setNFTS(NFTS);
-      }
+      const NFTS = await fetchNFTs();
+      console.log(NFTS);
+      setNFTS(NFTS);
     })();
-  }, [NFTS?.length]);
+  }, []);
 
   if (isLoading) return <Loading />;
 
