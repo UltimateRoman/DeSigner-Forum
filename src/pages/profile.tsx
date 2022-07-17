@@ -1,10 +1,22 @@
+import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import Redirect from "../components/Redirect";
 import { useAuth } from "../context/AuthProvider";
 import Default from "../layouts/default";
 
 const Profile = (props: any) => {
-  const { userData, isAuthenticated, isLoading } = useAuth();
+  const { userData, isAuthenticated, isLoading, fetchNFTs } = useAuth();
+
+  const [NFTS, setNFTS] = useState<any>(null);
+
+  useEffect(() => {
+    (async () => {
+      if (!isAuthenticated) {
+        const NFTS = await fetchNFTs();
+        setNFTS(NFTS);
+      }    
+    })();
+  }, [NFTS?.length]);
 
   if (isLoading) return <Loading />;
 

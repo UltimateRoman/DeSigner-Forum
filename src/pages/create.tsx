@@ -8,6 +8,30 @@ const Create: React.FC = (props) => {
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
+    // try {
+    //     const request0 = {
+    //       "UserPublicKeyBase58Check": user.key,
+    //       "file": image
+    //     };
+    //     const response0 = await deso.media.uploadImage(request0);
+    //     const request1 = {
+    //       "UpdaterPublicKeyBase58Check": user.key,
+    //       "BodyObj": {
+    //         "Body": title,
+    //         "ImageURLs": [response0?.ImageURL]
+    //       }
+    //     };
+    //     const response1 = await deso.posts.submitPost(request1);
+    //     const request2 = {
+    //       "UpdaterPublicKeyBase58Check": user.key,
+    //       "NFTPostHashHex": response1?.PostHashHex,
+    //       "NumCopies": copies,
+    //     };
+    //      const response2 = await deso.nft.createNft(request2);
+    //      console.log(response2);
+    // } catch (error) {
+    //     console.log("Error", error);
+    // }
     console.log({ title, copies, image });
   };
 

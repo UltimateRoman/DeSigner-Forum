@@ -73,13 +73,14 @@ const AuthProvider: React.FC<{ children: any }> = (props) => {
   const fetchNFTs = async () => {
     try {
       const Nfts: any = [];
+      const publicKey = deso.identity.getUserKey() as string;
       const request = {
-        UserPublicKeyBase58Check: userData?.username,
+        UserPublicKeyBase58Check: publicKey,
       };
-      const response = await deso.nft.getNftsForUser(request);
-      const keys = Object.keys(response?.NFTsMap);
+      const response = await deso.nft.getNftsForUser(request) as any;
+      const keys = Object.keys(response?.data?.NFTsMap);
       keys.forEach((key) => {
-        const nft = response?.NFTsMap[key];
+        const nft = response?.data?.NFTsMap[key]?.PostEntryResponse;
         Nfts.push(nft);
       });
       return Nfts;
